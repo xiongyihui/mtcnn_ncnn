@@ -7,16 +7,22 @@ project(mtcnn_ncnn C CXX)
 #3.set environment variable，设置环境变量
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+find_package(OpenCV REQUIRED)
+# find_package(OpenMP REQUIRED)
+# find_package(Threads REQUIRED)
+
+set(NCNN_DIR /home/pi/ncnn)
+
+
 #4.include头文件目录 
-include_directories(${CMAKE_CURRENT_LIST_DIR}/3rdparty/include/Opencv
-					${CMAKE_CURRENT_LIST_DIR}/3rdparty/include/Opencv/opencv
-					${CMAKE_CURRENT_LIST_DIR}/3rdparty/include/Opencv/opencv2
-					${CMAKE_CURRENT_LIST_DIR}/3rdparty/include/ncnn
+include_directories(${NCNN_DIR}/src
+                    ${NCNN_DIR}/20181224/src
                     ${CMAKE_CURRENT_LIST_DIR}/src)
 
 #5.library目录及name名称
-link_directories(${CMAKE_CURRENT_LIST_DIR}/3rdparty/lib)
-list(APPEND MTCNN_LINKER_LIBS opencv_world320 ncnn)
+link_directories(${NCNN_DIR}/20181224/src)
+list(APPEND MTCNN_LINKER_LIBS ${OpenCV_LIBS} ncnn)
+# list(APPEND MTCNN_LINKER_LIBS ${OpenCV_LIBS} OpenMP::OpenMP_CXX Threads::Threads ncnn)
 
 #6.source directory源文件目录
 file(GLOB MTCNN_SRC ${CMAKE_CURRENT_LIST_DIR}/src/*.h

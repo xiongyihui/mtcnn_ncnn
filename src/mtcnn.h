@@ -13,6 +13,8 @@
 #include <algorithm>
 #include <map>
 #include <iostream>
+#include <math.h>
+
 using namespace std;
 //using namespace cv;
 struct Bbox
@@ -62,7 +64,7 @@ private:
     std::vector<Bbox> firstBbox_, secondBbox_,thirdBbox_;
     int img_w, img_h;
 
-private://部分可调参数
+private:
 	const float threshold[3] = { 0.8f, 0.8f, 0.6f };
 	int minsize = 40;
 	const float pre_facetor = 0.709f;

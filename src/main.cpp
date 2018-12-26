@@ -3,16 +3,20 @@
 
 using namespace cv;
 
-#define MAXFACEOPEN 0 //ÉèÖÃÊÇ·ñ¿ª¹Ø×î´óÈËÁ³µ÷ÊÔ£¬1Îª¿ª£¬ÆäËüÎª¹Ø
+#define MAXFACEOPEN 1 //è®¾ç½®æ˜¯å¦å¼€å…³æœ€å¤§äººè„¸è°ƒè¯•ï¼Œ1ä¸ºå¼€ï¼Œå…¶å®ƒä¸ºå…³
 
 void test_video() {
 	char *model_path = "../models";
 	MTCNN mtcnn(model_path);
-	mtcnn.SetMinFace(40);
+	mtcnn.SetMinFace(80);
 	cv::VideoCapture mVideoCapture(0);
 	if (!mVideoCapture.isOpened()) {
 		return;
 	}
+
+	mVideoCapture.set(CV_CAP_PROP_FRAME_WIDTH,640);
+	mVideoCapture.set(CV_CAP_PROP_FRAME_HEIGHT,480);
+
 	cv::Mat frame;
 	mVideoCapture >> frame;
 	while (!frame.empty()) {
@@ -47,10 +51,9 @@ void test_video() {
 		imshow("face_detection", frame);
 		clock_t finish_time = clock();
 		double total_time = (double)(finish_time - start_time) / CLOCKS_PER_SEC;
-		std::cout << "time" << total_time * 1000 << "ms" << std::endl;
+		std::cout << "time " << total_time * 1000 << "ms" << std::endl;
 	
-		int q = cv::waitKey(10);
-		if (q == 27) {
+		if (cv::waitKey(1) == 'q') {
 			break;
 		}
 	}
